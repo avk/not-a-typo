@@ -2,26 +2,32 @@
 <html lang="en-US">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
 
     <title>Tihs is not a tpyo.</title>
   </head>
 
   <body>
 
-    <main>
-      <h1>
-        Tihs is not a tpyo.
-      </h1>
+    <main class="prose mx-auto">
 
-      <p>Read the story below, and then I'll explain.</p>
+      <hgroup class="pt-10 text-center">
+        <h1 class="text-3xl font-bold mb-0">
+          Tihs is not a tpyo.
+        </h1>
 
-      <article id="jumble">
+        <p>Read the story below, and then I'll explain.</p>
+      </hgroup>
+
+      <hr>
+
+      <article id="jumble" class="prose prose-2xl font-serif">
         
         <h2 class="preserve">
           <strong>little free library</strong>
           <br>
-          <span>by Arthur Klepchukov</span>
+          <span class="font-normal">by Arthur Klepchukov</span>
         </h2>
 
 <p>I bet we glimpse the world a little different. For example, what do you see when you spot a little free library? You know, those elaborately decorated wooden bird boxes in nicer neighborhoods that are full of books shared by nice neighbors doing nice things?</p>
@@ -34,7 +40,7 @@
 
 <p>I rejoice when a kid leaves a comic book in a little free library. The good ones can tell a story with only pictures. And there aren’t so many words that I can’t piece it together eventually. Kids books are great, but I don’t feel right denying a little tyke a good read. I don’t come across a lot of comics. They’re not “real” reading material, or so I overhear.</p>
 
-<p>Eavesdropping’s another hobby of mine. I live for a good story shared out loud. Makes me imagine the worlds people roam in between pages and pages of books. All those words. All those delicious ideas. Must be marvelous.</p>
+<p>Eavesdropping's another hobby of mine. I live for a good story shared out loud. Makes me imagine the worlds people roam in between pages and pages of books. All those words. All those delicious ideas. Must be marvelous.</p>
 
 <p>Sometimes, I have to admit, I’ll fetch a newer looking paperback or hardcover from a little free library and sell it to a used bookstore. It’s a few bucks, but when you’re hungry… I wish I could feast on words. Sometimes I do unpack one, like “delicious” in the last paragraph. And doesn’t deciphering the letters fill your belly with something scrumptious? The idea of a word can be a grander reality than sleeping on concrete, hopefully close enough to one of those air vents releasing steam and heat on cold days. Could be poisoning me for all I know, but gets me through another night to another word on another page.</p>
 
@@ -42,8 +48,10 @@
         
       </article>
 
+      <hr>
+
       <details>
-        <summary>What's going on here?</summary>
+        <summary class="cursor-pointer bg-slate-200 border rounded rounded-full p-5 w-fit mx-auto text-center">What's going on here?</summary>
 
         <p>
         This is a sympathy exercise to imagine what it might be like to read with dyslexia.
@@ -56,8 +64,8 @@
 
     </main>
 
-    <footer>
-      <p>&copy; Copyright 2025 by <a href="https://arsenalofwords.com/">Arthur Klepchukov</a>. All rights reversed.</p>
+    <footer class="my-10 text-center">
+      <p>&copy; Copyright 2025 by <a class="underline" href="https://arsenalofwords.com/">Arthur Klepchukov</a>. All rights reversed.</p>
     </footer>
 
   <script>
