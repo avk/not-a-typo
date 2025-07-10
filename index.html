@@ -26,7 +26,7 @@
 
       <hr>
 
-      <article id="transpose" class="prose prose-2xl font-serif" onclick="location.reload(); return false;">
+      <article id="transpose" class="prose prose-2xl font-serif select-none">
         
         <h2 class="preserve">
           <strong>Tihs is not a tpyo</strong>
@@ -83,6 +83,8 @@
     </footer>
 
   <script>
+    const wordPattern = /^([^A-Za-z0-9]*)([A-Za-z0-9]+)([^A-Za-z0-9]*)$/;
+
     function shuffleMiddle(word) {
       if (word.length <= 3) return word;
       const middle = word.slice(1, -1).split('');
@@ -94,36 +96,63 @@
     }
 
     function transposeWord(word) {
-      const match = word.match(/^([^A-Za-z0-9]*)([A-Za-z0-9]+)([^A-Za-z0-9]*)$/);
+      const match = word.match(wordPattern);
       if (!match) return word;
-
       const [, leading, core, trailing] = match;
       return leading + shuffleMiddle(core) + trailing;
     }
 
-    function transposeText(text) {
+    function canBeTransposed(word) {
+      const match = word.match(wordPattern);
+      return match && match[2].length > 3;
+    }
+
+    function wrapTransposableWords(text) {
       return text.split(/(\s+)/).map(token => {
-        return /\S/.test(token) ? transposeWord(token) : token;
+        if (/\S/.test(token) && canBeTransposed(token)) {
+          return `<span class="transposable-word cursor-pointer relative
+          before:absolute before:-bottom-1 before:left-1/2 before:w-0
+          before:h-0.5 before:bg-blue-600 before:transition-all
+          before:duration-300 before:-translate-x-1/2 hover:before:w-full
+          active:text-blue-600">${transposeWord(token)}</span>`;
+        }
+        return token;
       }).join('');
     }
 
     function walkAndTransposeTextNodes(node) {
       if (node.nodeType === Node.TEXT_NODE) {
-        node.textContent = transposeText(node.textContent);
+        const wrappedText = wrapTransposableWords(node.textContent);
+        if (wrappedText !== node.textContent) {
+          const wrapper = document.createElement('span');
+          wrapper.innerHTML = wrappedText;
+          node.parentNode.replaceChild(wrapper, node);
+        }
       } else if (node.nodeType === Node.ELEMENT_NODE) {
         if (node.classList.contains('preserve') || ['SCRIPT', 'STYLE'].includes(node.tagName)) {
           return; // skip this entire subtree
         }
-        for (let child of node.childNodes) {
+        // why? avoid live NodeList issues when replacing nodes
+        const children = Array.from(node.childNodes);
+        for (let child of children) {
           walkAndTransposeTextNodes(child);
         }
       }
     }
 
+    function handleWordClick(event) {
+      const word = event.target;
+      if (word.classList.contains('transposable-word')) {
+        word.textContent = transposeWord(word.textContent);
+      }
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
-      walkAndTransposeTextNodes(
-        document.getElementById('transpose')
-      );
+      let transposableText = document.getElementById('transpose');
+
+      walkAndTransposeTextNodes(transposableText);
+
+      transposableText.addEventListener('click', handleWordClick);
     });
   </script>
 
