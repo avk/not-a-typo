@@ -26,7 +26,7 @@
 
       <hr>
 
-      <article id="jumble" class="prose prose-2xl font-serif" onclick="location.reload(); return false;">
+      <article id="transpose" class="prose prose-2xl font-serif" onclick="location.reload(); return false;">
         
         <h2 class="preserve">
           <strong>Tihs is not a tpyo</strong>
@@ -93,7 +93,7 @@
       return word[0] + middle.join('') + word[word.length - 1];
     }
 
-    function jumbleWord(word) {
+    function transposeWord(word) {
       const match = word.match(/^([^A-Za-z0-9]*)([A-Za-z0-9]+)([^A-Za-z0-9]*)$/);
       if (!match) return word;
 
@@ -101,28 +101,28 @@
       return leading + shuffleMiddle(core) + trailing;
     }
 
-    function jumbleText(text) {
+    function transposeText(text) {
       return text.split(/(\s+)/).map(token => {
-        return /\S/.test(token) ? jumbleWord(token) : token;
+        return /\S/.test(token) ? transposeWord(token) : token;
       }).join('');
     }
 
-    function walkAndJumbleTextNodes(node) {
+    function walkAndTransposeTextNodes(node) {
       if (node.nodeType === Node.TEXT_NODE) {
-        node.textContent = jumbleText(node.textContent);
+        node.textContent = transposeText(node.textContent);
       } else if (node.nodeType === Node.ELEMENT_NODE) {
         if (node.classList.contains('preserve') || ['SCRIPT', 'STYLE'].includes(node.tagName)) {
           return; // skip this entire subtree
         }
         for (let child of node.childNodes) {
-          walkAndJumbleTextNodes(child);
+          walkAndTransposeTextNodes(child);
         }
       }
     }
 
     document.addEventListener('DOMContentLoaded', () => {
-      walkAndJumbleTextNodes(
-        document.getElementById('jumble')
+      walkAndTransposeTextNodes(
+        document.getElementById('transpose')
       );
     });
   </script>
